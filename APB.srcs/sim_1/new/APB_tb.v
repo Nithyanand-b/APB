@@ -16,8 +16,7 @@ module APB_tb;
     wire [31:0] temp;
     wire pready;
     wire perror;
-
-    // Instantiate the APB module
+    
     APB uut (
         .pclk(pclk),
         .preset(preset),
@@ -32,11 +31,11 @@ module APB_tb;
         .perror(perror)
     );
 
-    // Clock generation: 100MHz (10ns period)
+    // 100MHz 10ns
     always #5 pclk = ~pclk;
 
     initial begin
-        // Initialize signals
+       
         pclk = 0;
         preset = 0;
         pwrite = 0;
@@ -45,12 +44,11 @@ module APB_tb;
         pwdata = 0;
         paddress = 0;
 
-        // Apply reset
+        
         #10 preset = 1;
 
         // ----------------------------
-        // Write transaction to address 20 (byte address)
-        // Word-aligned = address[13:2] = 5
+        // Write 20 (byte address)
         // ----------------------------
         @(posedge pclk);
         pwrite = 1;
@@ -70,7 +68,7 @@ module APB_tb;
         @(posedge pclk);
 
         // ----------------------------
-        // Read transaction from address 20
+        // Read from address 20
         // ----------------------------
         @(posedge pclk);
         pwrite = 0;
