@@ -1,6 +1,6 @@
 # APB Protocol - Verilog Implementation
 
-This project implements a basic version of the **AMBA APB (Advanced Peripheral Bus)** protocol in Verilog, along with a testbench to verify read/write operations.
+This project implements **AMBA APB (Advanced Peripheral Bus)** protocol in Verilog, along with a testbench to verify read/write operations.
 
 ##
 ![RTL](https://github.com/Nithyanand-b/APB/blob/main/Screenshot%202025-05-31%20011312.png)
