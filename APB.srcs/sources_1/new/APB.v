@@ -32,7 +32,7 @@ module APB(
 
     reg [1:0] present_state, next_state;
 
-    // Sequential logic
+    // Sequential logic (Async)
     always @(posedge pclk or negedge preset) begin
         if (!preset)
             present_state <= IDLE;
