@@ -6,13 +6,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module APB(
-    // ..Outputs
+    // Outputs
     output reg [31:0] prdata,
     output reg pready,
     output reg perror,
     output reg [31:0] temp,
 
-    // ..Inputs
+    // Inputs
     input pwrite,
     input [31:0] pwdata,
     input psel,
@@ -22,8 +22,12 @@ module APB(
     input [31:0] paddress
 );
 
-    // Mem
-    reg [31:0] mem [0:31];
+    // Internal Memory: 4 KB = 4096 entries of 32-bit (4 bytes each)
+    reg [31:0] mem [0:4095];
+
+    // Address decoding: using lower 12 bits (word-aligned)
+    wire [11:0] mem_addr;
+    assign mem_addr = paddress[13:2];  // 4-byte aligned word address
 
     // FSM states
     parameter [1:0] IDLE   = 2'b00,
@@ -40,39 +44,17 @@ module APB(
             present_state <= next_state;
     end
 
-    // Combinational logic: next-state logic
+    // Combinational logic (next-state logic)
     always @(*) begin
-    
         case (present_state)
-        
-                    IDLE: begin
-                        if (psel && !penable)
-                            next_state = SETUP;
-                        else
-                            next_state = IDLE;
-                    end
-                    
-                    SETUP: begin
-                        if (psel && penable)
-                            next_state = ACCESS;
-                        else
-                            next_state = IDLE;
-                    end
-
-                    ACCESS: begin
-                          if (!psel)
-                              next_state = IDLE;
-                          else
-                              next_state = ACCESS;
-                    end
-
-  
+            IDLE:   next_state = (psel && !penable) ? SETUP : IDLE;
+            SETUP:  next_state = (psel && penable)  ? ACCESS : IDLE;
+            ACCESS: next_state = (!psel) ? IDLE : ACCESS;
             default: next_state = IDLE;
- 
-       endcase
+        endcase
     end
 
-    // Output logic and memory access
+    // Output logic and memory read/write
     always @(posedge pclk or negedge preset) begin
         if (!preset) begin
             prdata <= 0;
@@ -80,25 +62,24 @@ module APB(
             pready <= 0;
             perror <= 0;
         end else begin
-            pready <= 0; // Default value
+            pready <= 0;  
 
             case (present_state)
                 ACCESS: begin
                     pready <= 1;
 
                     if (pwrite) begin
-                        mem[paddress] <= pwdata;
+                        mem[mem_addr] <= pwdata;       
                         temp <= pwdata;
                         perror <= 0;
                     end else begin
-                        prdata <= mem[paddress];
-                        temp <= mem[paddress];
+                        prdata <= mem[mem_addr];        
+                        temp <= mem[mem_addr];
                         perror <= 0;
                     end
                 end
 
                 default: begin
-                    // Hold outputs or assign default values
                     pready <= 0;
                 end
             endcase
