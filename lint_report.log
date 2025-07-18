@@ -1,0 +1,15 @@
+QuestaSim-64 vlog 2024.1 Compiler 2024.02 Feb  1 2024
+::SIG:: 5370079584
+Start time: 22:17:51 on Jul 18,2025
+vlog -reportprogress 300 "+lint=all" -sv tb.sv 
+** Note: (vlog-2286) dut/apb_components.sv(3): Using implicit +incdir+C:/questasim64_2024.1/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
+-- Compiling package tb_sv_unit
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Compiling interface apb_if
+-- Compiling module apb
+-- Compiling module tb
+
+Top level modules:
+	tb
+End time: 22:17:52 on Jul 18,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
