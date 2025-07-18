@@ -2,7 +2,7 @@
 
 module tb;
 
-           apb_if vif();
+           apb_interface vif();
 
            apb dut (
                 .PCLK     (vif.PCLK),
@@ -33,7 +33,7 @@ module tb;
            // Start UVM test
            initial 
            begin
-                uvm_config_db#(virtual apb_if)::set(null, "*", "vif", vif);
+                uvm_config_db#(virtual apb_interface)::set(null, "*", "vif", vif);
                 run_test("test");
            end
 

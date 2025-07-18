@@ -2,7 +2,7 @@ class driver extends uvm_driver #(transaction);
 
            `uvm_component_utils(driver)
 
-           virtual apb_if vif;
+           virtual apb_interface vif;
 
            function new(string name = "driver", uvm_component parent = null);
                   super.new(name, parent);  
@@ -11,7 +11,7 @@ class driver extends uvm_driver #(transaction);
            virtual function void build_phase(uvm_phase phase);
                   super.build_phase(phase);
 
-                  if (!uvm_config_db #(virtual apb_if)::get(this, "", "vif", vif)) 
+                  if (!uvm_config_db #(virtual apb_interface)::get(this, "", "vif", vif)) 
                   begin
                        `uvm_fatal("DRV", "Unable to access APB interface")
                   end

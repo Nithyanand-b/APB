@@ -5,7 +5,7 @@ vlog -reportprogress 300 "+lint=all" -sv tb.sv
 ** Note: (vlog-2286) dut/apb_components.sv(3): Using implicit +incdir+C:/questasim64_2024.1/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
 -- Compiling package tb_sv_unit
 -- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
--- Compiling interface apb_if
+-- Compiling interface apb_interface
 -- Compiling module apb
 -- Compiling module tb
 

@@ -2,7 +2,7 @@ class monitor extends uvm_monitor;
 
            `uvm_component_utils(monitor)
     
-           virtual apb_if                   vif;
+           virtual apb_interface                   vif;
            uvm_analysis_port #(transaction) send;
            transaction                     tr_q[$];
 
@@ -15,7 +15,7 @@ class monitor extends uvm_monitor;
            virtual function void build_phase(uvm_phase phase);
                   super.build_phase(phase);
 
-                  if (!uvm_config_db #(virtual apb_if)::get(this, "", "vif", vif)) 
+                  if (!uvm_config_db #(virtual apb_interface)::get(this, "", "vif", vif)) 
                   begin
                        `uvm_fatal("MON", "Unable to access APB interface")
                   end

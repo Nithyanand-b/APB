@@ -2,7 +2,7 @@ import uvm_pkg::*;
 
 `include "uvm_macros.svh"
 
-`include "dut/apb_if.sv"
+`include "dut/apb_interface.sv"
 
 
 `include "testbench/transaction.sv"
